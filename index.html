@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Weiterleitung</title>
+  <script>
+    window.onload = function () {
+      const params = new URLSearchParams(window.location.search);
+      const accountid = params.get("accountid");
+      const name = params.get("name");
+      const date = new Date().toISOString().split("T")[0];
+
+      if (!accountid || !name) {
+        document.body.innerHTML = "Fehlende Parameter.";
+        return;
+      }
+
+      const encodedName = encodeURIComponent(name).replace(/%/g, "%25").replace(/ /g, "%2520");
+
+      const crmLink =
+        "https://kometdentallive.crm4.dynamics.com/main.aspx?" +
+        "appid=a6b81ae2-3996-4adb-a0fb-2e15750512de" +
+        "&pagetype=entityrecord" +
+        "&etn=bras_besuchsbericht" +
+        "&extraqs=" +
+        "regardingobjectid%3D%7B" + accountid + "%7D" +
+        "%26regardingobjectidname%3D" + encodedName +
+        "%26regardingobjectidtype%3Daccount" +
+        "%26bras_besuchsdatum%3D" + date;
+
+      window.location.href = crmLink;
+    };
+  </script>
+</head>
+<body>
+  <p>Bitte warten, Sie werden weitergeleitet...</p>
+</body>
+</html>
