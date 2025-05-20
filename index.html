@@ -8,6 +8,7 @@
       const params = new URLSearchParams(window.location.search);
       const accountid = params.get("accountid");
       const name = params.get("name");
+      const description = params.get("description") || ""; // Terminnotiz
       const date = new Date().toISOString().split("T")[0];
 
       if (!accountid || !name) {
@@ -16,6 +17,7 @@
       }
 
       const encodedName = encodeURIComponent(name).replace(/%/g, "%25").replace(/ /g, "%2520");
+      const encodedDescription = encodeURIComponent(description).replace(/%/g, "%25");
 
       const crmLink =
         "https://kometdentallive.crm4.dynamics.com/main.aspx?" +
@@ -26,7 +28,8 @@
         "regardingobjectid%3D%7B" + accountid + "%7D" +
         "%26regardingobjectidname%3D" + encodedName +
         "%26regardingobjectidtype%3Daccount" +
-        "%26bras_besuchsdatum%3D" + date;
+        "%26bras_besuchsdatum%3D" + date +
+        "%26bras_terminnotiz%3D" + encodedDescription;
 
       window.location.href = crmLink;
     };
