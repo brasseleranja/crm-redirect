@@ -10,6 +10,8 @@
       const name = params.get("name");
       const description = params.get("description") || "";
       const rhythmus = params.get("rhythmus") || ""; // z. B. 100000001
+      const stuehle = params.get("stuehle") || "";
+      const denty = params.get("denty") || "";
       const date = new Date().toISOString().split("T")[0];
 
       if (!accountid || !name) {
@@ -19,6 +21,8 @@
 
       const encodedName = encodeURIComponent(name).replace(/%/g, "%25").replace(/ /g, "%2520");
       const encodedDescription = encodeURIComponent(description).replace(/%/g, "%25");
+      const encodedStuehle = encodeURIComponent(stuehle).replace(/%/g, "%25");
+      const encodedDenty = encodeURIComponent(denty).replace(/%/g, "%25");
 
       let crmLink =
         "https://kometdentallive.crm4.dynamics.com/main.aspx?" +
@@ -34,6 +38,12 @@
 
       if (rhythmus) {
         crmLink += "%26bras_besuchsrhythmus%3D" + rhythmus;
+      }
+   if (stuehle) {
+        crmLink += "%26bras_anzahlbehandlungszimmer%3D" + encodedStuehle;
+      }
+      if (denty) {
+        crmLink += "%26bras_interessedenty%3D" + encodedDenty;
       }
 
       window.location.href = crmLink;
